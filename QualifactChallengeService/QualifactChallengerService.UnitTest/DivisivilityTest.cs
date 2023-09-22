@@ -1,6 +1,9 @@
 ﻿using NUnit.Framework;
 using QualifactChallengeService.Application.Models;
 using QualifactChallengeService.Application.Services;
+using QualifactChallengeService.Infraestructure.Localization;
+using System.Drawing;
+using Timeportal.Infrastructure.Exceptions;
 
 namespace QualifactChallengerService.UnitTest
 {
@@ -10,81 +13,103 @@ namespace QualifactChallengerService.UnitTest
         [Test]
         public void CalculateResult_InputDivisibleByBoth_ReturnsIDontKnow()
         {
-            // Arrange
             var service = new DivisivilityService();
             int input1 = 3;
             int input2 = 5;
             int number = 15;
 
-            // Act
             string result = service.CalculateResult(number, input1, input2);
 
-            // Assert
-            Assert.AreEqual("I don’t know", result);
+            Assert.AreEqual(SystemMessages.DivisivilityNotKnown, result);
         }
 
         [Test]
         public void CalculateResult_InputDivisibleByInput1_ReturnsYes()
         {
-            // Arrange
             var service = new DivisivilityService();
             int input1 = 3;
             int input2 = 5;
             int number = 9;
 
-            // Act
             string result = service.CalculateResult(number, input1, input2);
 
-            // Assert
-            Assert.AreEqual("Yes", result);
+            Assert.AreEqual(SystemMessages.DivisivilityYes, result);
         }
 
         [Test]
         public void CalculateResult_InputDivisibleByInput2_ReturnsNo()
         {
-            // Arrange
             var service = new DivisivilityService();
             int input1 = 3;
             int input2 = 5;
             int number = 10;
-
-            // Act
             string result = service.CalculateResult(number, input1, input2);
 
-            // Assert
-            Assert.AreEqual("No", result);
+            Assert.AreEqual(SystemMessages.DivisivilityNo, result);
         }
 
         [Test]
         public void CalculateResult_InputNotDivisibleByEither_ReturnsNA()
         {
-            // Arrange
             var service = new DivisivilityService();
             int input1 = 3;
             int input2 = 5;
             int number = 7;
 
-            // Act
             string result = service.CalculateResult(number, input1, input2);
-
-            // Assert
-            Assert.AreEqual("N/A", result);
+            Assert.AreEqual(SystemMessages.DivisivilityNA, result);
         }
 
         [Test]
         public void GetResults_ReturnsCorrectNumberOfResults()
         {
-            // Arrange
             var service = new DivisivilityService();
             int input1 = 2;
             int input2 = 3;
             int size = 5;
 
-            // Act
             IEnumerable<DivisivilityResult> results = service.GetResults(input1, input2, size);
 
-            // Assert
             Assert.AreEqual(size, results.Count());
         }
+
+        [Test]
+        public void GetResults_SizeNegative_InvalidResult()
+        {
+            var service = new DivisivilityService();
+            int input1 = 2;
+            int input2 = 3;
+            int size = -4;
+
+
+            Assert.That(() => service.GetResults(input1, input2, size), Throws.TypeOf<ApplicationArgumentException>().With
+                .Message.Contains(SystemMessages.DivisivilitySizeValidation));
+        }
+
+        [Test]
+        public void CalculateResult_Input1Zero_InvalidResult()
+        {
+            var service = new DivisivilityService();
+            int input1 = 0;
+            int input2 = 5;
+            int number = 10;
+
+            Assert.That(() => service.CalculateResult(number,input1, input2), Throws.TypeOf<ApplicationArgumentException>().With
+                .Message.Contains(SystemMessages.DivisivilityNegativeOrZeroValidation1));
+        }
+
+
+        [Test]
+        public void CalculateResult_Input2Zero_InvalidResult()
+        {
+            var service = new DivisivilityService();
+            int input1 = 5;
+            int input2 = 0;
+            int number = 10;
+
+            Assert.That(() => service.CalculateResult(number, input1, input2), Throws.TypeOf<ApplicationArgumentException>().With
+                .Message.Contains(SystemMessages.DivisivilityNegativeOrZeroValidation2));
+        }
+
     }
 }

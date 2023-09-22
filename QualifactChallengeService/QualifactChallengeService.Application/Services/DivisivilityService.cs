@@ -1,11 +1,18 @@
 ﻿using QualifactChallengeService.Application.Interfaces;
 using QualifactChallengeService.Application.Models;
+using QualifactChallengeService.Infraestructure.Localization;
+using Timeportal.Infrastructure.Exceptions;
 
 namespace QualifactChallengeService.Application.Services { 
     public class DivisivilityService : IDivisivilityService
     {
         public IEnumerable<DivisivilityResult> GetResults(int input1, int input2, int size)
         {
+            if (size< 0)
+            {
+                throw new ApplicationArgumentException(SystemMessages.DivisivilitySizeValidation);
+            }
+
             var results = new List<DivisivilityResult>();
             for (int i = 1; i <= size; i++)
             {
@@ -17,14 +24,23 @@ namespace QualifactChallengeService.Application.Services {
 
         public string CalculateResult(int number, int input1, int input2)
         {
+            if (input1 <= 0)
+            {
+                throw new ApplicationArgumentException(SystemMessages.DivisivilityNegativeOrZeroValidation1);
+            }
+            if (input2 <= 0)
+            {
+                throw new ApplicationArgumentException(SystemMessages.DivisivilityNegativeOrZeroValidation2);
+            }
+
             if (number % input1 == 0 && number % input2 == 0)
-                return "I don’t know";
+                return SystemMessages.DivisivilityNotKnown;
             else if (number % input1 == 0)
-                return "Yes";
+                return SystemMessages.DivisivilityYes;
             else if (number % input2 == 0)
-                return "No";
+                return SystemMessages.DivisivilityNo;
             else
-                return "N/A";
+                return SystemMessages.DivisivilityNA;
         }
     }
 }

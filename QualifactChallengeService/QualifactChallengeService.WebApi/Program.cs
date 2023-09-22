@@ -1,5 +1,6 @@
 using QualifactChallengeService.Application.Interfaces;
 using QualifactChallengeService.Application.Services;
+using QualifactChallengeService.WebApi.Infraestructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,5 +26,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.Run();
