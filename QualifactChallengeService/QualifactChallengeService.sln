@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualifactChallengeService.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualifactChallengeService.Application", "QualifactChallengeService.Application\QualifactChallengeService.Application.csproj", "{58E394D0-A7F9-4B2D-B563-FEF4F1E58095}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualifactChallengerService.UnitTest", "QualifactChallengerService.UnitTest\QualifactChallengerService.UnitTest.csproj", "{731CBD1F-0D1B-4B61-A248-B1BE585A3677}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualifactChallengeService.UnitTest", "QualifactChallengerService.UnitTest\QualifactChallengeService.UnitTest.csproj", "{731CBD1F-0D1B-4B61-A248-B1BE585A3677}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualifactChallengeService.Infraestructure", "QualifactChallengeService.Infraestructure\QualifactChallengeService.Infraestructure.csproj", "{21F7AB33-431D-48A3-B7D2-4526D6427A40}"
 EndProject
